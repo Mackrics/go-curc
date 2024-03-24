@@ -11,11 +11,15 @@ import (
 )
 
 func main() {
-  fromCur := flag.String("to", "dkk", "The currency converting from")
-  toCur := flag.String("from", "sek", "The currency converting to")
-  amountCur := flag.String("amount", "1", "The currency converting to")
-
+  fromCur := flag.String("f", "", "The currency converting from")
+  toCur := flag.String("t", "", "The currency converting to")
+  amountCur := flag.String("a", "1", "The currency converting to")
   flag.Parse()
+
+  if *fromCur == "" || *toCur == "" {
+    flag.Usage()
+    os.Exit(1)
+  }
 
   r, _ := regexp.Compile("[a-zA-Z]")
   if r.MatchString(*amountCur) {
